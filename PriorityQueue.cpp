@@ -3,9 +3,10 @@
 using namespace std;
 
 
+template<typename Type>
 class PriorityQueue {
 private:
-    vector<short> heap;
+    vector<Type> heap;
 
     int left(const int& index) const {
         int answer = (index * 2) + 1;
@@ -32,13 +33,13 @@ private:
 public:
     PriorityQueue() = default;
 
-    PriorityQueue(const vector<short>& v) : PriorityQueue() {
+    PriorityQueue(const vector<Type>& v) : PriorityQueue() {
 
         heap.reserve(v.size());
-        for(const short& elt : v) push(elt);
+        for(const Type& elt : v) push(elt);
     }
 
-    void push(const short& new_value) {
+    void push(const Type& new_value) {
 
         heap.push_back(new_value);
 
@@ -59,6 +60,7 @@ public:
         if(size() == 1) return heap.pop_back();
 
         swap(*heap.begin(), *heap.rbegin());
+        heap.pop_back();
 
         int current = 0;
         int c = better_child(current);
@@ -68,9 +70,10 @@ public:
             current = c;
             c = better_child(current);
         }
+
     }
 
-    short top() const {
+    Type top() const {
         return *heap.begin();
     }
 
@@ -86,11 +89,6 @@ public:
 
 int main() {
 
-    PriorityQueue q({1, 9, 12, 5});
-
-    cout << q.top() << endl;
-    q.pop();
-    cout << q.top();
 
     return 0;
 }
